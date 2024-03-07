@@ -1,8 +1,8 @@
 ---
-title: "Post With Code"
+title: "olympicsWeather ?"
 author: "Amel Dahmani"
 date: "2024-03-07"
-categories: [news, code, analysis]
+categories: [code, analysis]
 image: "image.jpg"
 ---
 
@@ -23,7 +23,7 @@ Cette section introduit le package olympicsWeather et explique comment l'install
 
 ## Prévisions météo pour le Stade de France
 
-Pour obtenir les prévisions météorologiques à 7 jours pour le Stade de France, nous pouvons utiliser la fonction `get_forecast()` en spécifiant "Stade de France" comme adresse :
+Pour obtenir les prévisions météorologiques à 7 jours pour le Stade de France, nous pouvons utiliser la fonction `get_forecast()` ou **`get_forecast.character()`** en spécifiant "Stade de France" comme adresse :
 
 ```{r, echo =FALSE, message=FALSE}
 library(olympicsWeather)
@@ -43,14 +43,13 @@ library(lubridate)
 library(quarto)
 ```
 
-
 ```{r}
 get_forecast("Stade de France")
 ```
 
 ## Prévisions météo pour Tahiti
 
-Pour obtenir les prévisions météorologiques pour Tahiti, nous utilisons la fonction **`get_forecast()`** en spécifiant "Tahiti" comme adresse :
+Pour obtenir les prévisions météorologiques pour Tahiti, nous utilisons la fonction **`get_forecast()`** ou **`get_forecast.character()`** en spécifiant "Tahiti" comme adresse :
 
 ```{r}
 get_forecast("Tahiti")
@@ -58,7 +57,7 @@ get_forecast("Tahiti")
 
 ## **Prévisions météo pour les coordonnées GPS 43.276703, 5.334791**
 
-Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction **`get_forecast`**:
+Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction **`get_forecast ou``get_forecast.numeric`**:
 
 ```{r}
 get_forecast(c(43.276703, 5.334791))

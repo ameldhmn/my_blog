@@ -9,7 +9,7 @@
 <meta name="author" content="Amel Dahmani">
 <meta name="dcterms.date" content="2024-03-07">
 
-<title>my_blog - Post With Code</title>
+<title>my_blog - olympicsWeather ?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -137,9 +137,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Post With Code</h1>
+      <h1 class="title">olympicsWeather ?</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
               </div>
@@ -192,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="prévisions-météo-pour-le-stade-de-france" class="level2">
 <h2 class="anchored" data-anchor-id="prévisions-météo-pour-le-stade-de-france">Prévisions météo pour le Stade de France</h2>
-<p>Pour obtenir les prévisions météorologiques à 7 jours pour le Stade de France, nous pouvons utiliser la fonction <code>get_forecast()</code> en spécifiant “Stade de France” comme adresse :</p>
+<p>Pour obtenir les prévisions météorologiques à 7 jours pour le Stade de France, nous pouvons utiliser la fonction <code>get_forecast()</code> ou <strong><code>get_forecast.character()</code></strong> en spécifiant “Stade de France” comme adresse :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_forecast</span>(<span class="st">"Stade de France"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -223,14 +222,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="prévisions-météo-pour-tahiti" class="level2">
 <h2 class="anchored" data-anchor-id="prévisions-météo-pour-tahiti">Prévisions météo pour Tahiti</h2>
-<p>Pour obtenir les prévisions météorologiques pour Tahiti, nous utilisons la fonction <strong><code>get_forecast()</code></strong> en spécifiant “Tahiti” comme adresse :</p>
+<p>Pour obtenir les prévisions météorologiques pour Tahiti, nous utilisons la fonction <strong><code>get_forecast()</code></strong> ou <strong><code>get_forecast.character()</code></strong> en spécifiant “Tahiti” comme adresse :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_forecast</span>(<span class="st">"Tahiti"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Passing 1 address to the ArcGIS single address geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.1 seconds</code></pre>
+<pre><code>Query completed in: 0.2 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 168 × 5
@@ -245,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  7 2024-03-06 23:00:00                     21.8                             24.8
  8 2024-03-06 23:00:00                     21                               23.4
  9 2024-03-06 23:00:00                     21                               23.3
-10 2024-03-06 23:00:00                     21.4                             23.3
+10 2024-03-06 23:00:00                     20.9                             23.8
 # ℹ 158 more rows
 # ℹ abbreviated name: ¹​`données de température ressentie`
 # ℹ 2 more variables: `probabilité de pluie` &lt;int&gt;, `precipitation en mm` &lt;dbl&gt;</code></pre>
@@ -254,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="prévisions-météo-pour-les-coordonnées-gps-43.276703-5.334791" class="level2">
 <h2 class="anchored" data-anchor-id="prévisions-météo-pour-les-coordonnées-gps-43.276703-5.334791"><strong>Prévisions météo pour les coordonnées GPS 43.276703, 5.334791</strong></h2>
-<p>Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction <strong><code>get_forecast</code></strong>:</p>
+<p>Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction <strong><code>get_forecast ou``get_forecast.numeric</code></strong>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_forecast</span>(<span class="fu">c</span>(<span class="fl">43.276703</span>, <span class="fl">5.334791</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

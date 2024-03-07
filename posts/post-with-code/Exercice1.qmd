@@ -1,0 +1,364 @@
+---
+title: "Exercices - Semaine 1" 
+date: "2024-03-07"
+categories: [code, analysis]
+image: "image.jpg"
+---
+
+## Exercices - Semaine 1
+
+### Préparation
+
+1.  ::: {style="text-align: justify;"}
+    -   Vérifiez que les options globales de RStudio sont conformes aux options recommandées dans le cours.
+
+    -   Créez un projet RStudio intitulé cours_r_semaine_1. Ce projet sera créé vide. Les options utilisation de renv et de git peuvent être ignorées.
+    :::
+
+### Exercice
+
+::: {style="text-align: justify;"}
+Pour cet exercice, nous allons télécharger un jeu de données issu de https://data.gouv.fr sur les infrastructures olympiques des JO 2024 à Paris. Le jeu de données est disponible ici. L’objectif de cet exercice est d’utiliser uniquement des fonctions de R base. N’utilisez pas de librairie tierce sauf mention contraire.
+:::
+
+### Question 2
+
+::: {style="text-align: justify;"}
+#### Lisez le fichier téléchargé (ou directement depuis le site, cf aide plus bas) avec la fonction read.table. Le résultat sera affecté à l’objet de nom data_ex. Le jeux de données contient 4 colonnes. Quels sont les noms et la nature des colonnes ? Combien de lignes contient la data.frame ? {style="text-align: justify;"}
+:::
+
+##### Chargement de la base de données
+
+```{r}
+data_ex <- read.csv("~/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/cours-r-avance/paris-2024-sites-olympiques-et-paralympiques-franciliens.csv", sep=";")
+```
+
+```{r}
+colnames_data<-colnames(data_ex)
+types_col<-sapply(data_ex, class)
+```
+
+##### Noms des colonnes, nature des colonnes et nombre de lignes :
+
+```{r}
+message("Noms des colonnes : ", paste(colnames_data, collapse = ", "))
+message("Nature des colonnes : ", paste(types_col, collapse = ", "))
+message("Nombre de lignes : ", nrow(data_ex))
+dim(data_ex)
+```
+
+Le jeu de données "Paris 2024" comporte 31 lignes et 4 colonnes de type *caractère* qui portent les noms suivants :
+
+-   geo_point
+
+-   nom
+
+-   sites_olympiques
+
+-   sports
+
+### Question 3
+
+#### Combien y a t’il de sites olympiques ?
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+nb_sites_olympiques <- sum(data_ex$sites_olympiques_paralympiques=="Site olympique")
+nb_sites_olympiques
+message("Nombre de sites olympiques : ", nb_sites_olympiques)
+```
+
+Le jeu de données comporte 10 sites olympiques.
+
+### Question 4
+
+#### Combien y a t’il de sites paralympiques ?
+
+```{r}
+nb_sites_paralympiques <- sum(data_ex$sites_olympiques_paralympiques=="Site paralympique")
+nb_sites_paralympiques
+message("Nombre de sites paralympiques : ", nb_sites_paralympiques)
+
+nb_sites_olympiques_paralympiques <- sum(data_ex$sites_olympiques_paralympiques == "Site olympique,Site paralympique", na.rm = TRUE)
+nb_sites_olympiques_paralympiques
+message("Nombre de sites olympiques et paralympiques : ", nb_sites_olympiques_paralympiques)
+```
+
+Le jeu de données comporte 3 sites paralympiques.
+
+De plus, il comporte 16 sites qui sont à la fois olympiques et paralympiques.
+
+### Question 5
+
+#### Quels sont les sites qui accueillent plusieurs disciplines sportives ?
+
+##### méthode 1
+
+```{r}
+plusieurs_sports <- data_ex |>
+  filter(str_detect(sports, ","))
+print(plusieurs_sports$nom)
+```
+
+##### méthode 2
+
+```{r}
+plusieurs_sports2 <- data_ex[grepl(",", data_ex$sports), ]
+print(plusieurs_sports2$nom)
+```
+
+##### méthode 3
+
+```{r}
+data_ex$nb_sports <- strsplit(as.character(data_ex$sports), ",")
+plusieurs_sports3 <- data_ex[sapply(data_ex$nb_sports, length) > 1, ]
+print(plusieurs_sports3$nom)
+```
+
+Les trois méthodes nous permettent de considérer qu'il y a 19 qui accueillent plusieurs disciplines sportives. Ces derniers sont cités ci-dessus.
+
+### Question 6
+
+#### Quelles sont les disciplines para-olympiques accueillies dans ces sites franciliens ?
+
+```{r}
+sites_para <- data_ex[data_ex$sites_olympiques_paralympiques == "Site paralympique",]
+sites_para$sports 
+```
+
+Les disciplines ci-dessus sont celles accueillis par les sites para-olympiques.
+
+```{r}
+sites_para_olym <- data_ex[data_ex$sites_olympiques_paralympiques == "Site olympique,Site paralympique",]
+sites_para_olym$sports
+```
+
+Les sites ci-dessus sont ceux qui accueillent les disciplines para-olympiques.
+
+### Question 7
+
+#### Quel(s) site(s) accueille(nt) le plus de disciplines différentes ?
+
+```{r, results='hide'}
+plusieurs_sports3$nb_sports
+```
+
+```{r}
+plusieurs_sports3$nom 
+```
+
+Les sites suivant accueillent au moins quatre disciplines différentes :
+
+-   Arena Bercy \[6\]
+
+-   Arena Paris nord \[7\]
+
+-   Stade de la Concorde \[9\]
+
+-   Arena Champs de Mars \[10\]
+
+-   Stade nautique \[12\]
+
+-   Arena La Chapelle \[15\]
+
+-   Grand Palais \[18\]
+
+-   Invalides \[19\]
+
+Ce sont les sites qui accueillent le plus de disciplines différentes.
+
+### Question 8
+
+#### Quelle discipline aura lieu sur le plus grand nombre de sites ? Quels sont ces sites ?
+
+##### méthode 1
+
+```{r}
+data_ex <- data_ex |> 
+  mutate(sports_list = strsplit(as.character(sports), ","))
+
+disciplines_long <- data_ex |> 
+  select(nom, sports_list) |> 
+  unnest(sports_list)
+
+nombre_sites_par_discipline <- disciplines_long |> 
+  group_by(sports_list) |> 
+  summarise(nombre_sites = n_distinct(nom)) |> 
+  arrange(desc(nombre_sites))
+
+discipline_max_sites <- nombre_sites_par_discipline[which.max(nombre_sites_par_discipline$nombre_sites), ]
+
+sites_pour_discipline <- disciplines_long |> 
+  filter(sports_list == discipline_max_sites$sports_list) |> 
+  select(nom) |> 
+  distinct()
+
+discipline_max_sites$sports_list
+sites_pour_discipline
+```
+
+```{r}
+message("Discipline avec le plus grand nombre de sites :", discipline_max_sites$sports_list)
+message("Sites où cette discipline aura lieu :", sites_pour_discipline)
+```
+
+##### méthode 2
+
+```{r}
+discipline_max_sites2 <- names(which.max(table(unlist(strsplit(data_ex$sports, ",")))))
+sites_pour_discipline2 <- data_ex$nom[sapply(data_ex$sports, function(x) discipline_max_sites2 %in% unlist(strsplit(x, ",")))]
+```
+
+```{r}
+message("Discipline ayant lieu sur le plus grand nombre de sites : ", discipline_max_sites2)
+message("Sites où la discipline a lieu : ", paste(sites_pour_discipline2, collapse = ", "))
+```
+
+L'Athlétisme est la discipline qui aura lieu sur le plus grand nombre de sites. Cette dernière aura lieu sur les sites suivants :
+
+-   Stade de France
+
+-   Hôtel de ville de Paris
+
+-   Pont d'Iéna
+
+-   Invalides
+
+### Question 9
+
+#### A vol d’oiseau, quels sont les sites les deux sites les plus proches ?
+
+```{r,  results='hide'}
+library(geosphere)
+library(dplyr)
+
+coordonnees_donnees <- data.frame(do.call('rbind', strsplit(as.character(data_ex$geo_point), ',')))
+
+colnames(coordonnees_donnees) <- c("latitude", "longitude")
+
+data_ex <- cbind(data_ex, coordonnees_donnees)
+#str(data_ex)
+
+data_ex$longitude <- as.numeric(data_ex$longitude)
+data_ex$latitude <- as.numeric(data_ex$latitude)
+
+coordonnees <- data_ex[, c("latitude", "longitude")]
+noms_sites <- data_ex$nom
+```
+
+```{r, results='hide'}
+site1 <- NULL
+site2 <- NULL
+distance_min <- Inf
+
+for (i in 1:(nrow(coordonnees) - 1)) {
+  for (j in (i + 1):nrow(coordonnees)) {
+    nom_site_i <- tolower(trimws(noms_sites[i]))
+    nom_site_j <- tolower(trimws(noms_sites[j]))
+        distance <- distHaversine(coordonnees[c(i, j), , drop = FALSE])
+    
+    cat("Distance entre", nom_site_i, "et", nom_site_j, ":", distance, "mètres\n")
+    
+    if (distance < distance_min) {
+      distance_min <- distance
+      site1 <- nom_site_i
+      site2 <- nom_site_j
+      
+      cat("Nouvelle paire trouvée :", site1, "et", site2, "avec distance :", distance_min, "mètres\n")
+    }
+  }
+}
+```
+
+```{r}
+if (!is.null(site1) && !is.null(site2)) {
+  cat("Les deux sites les plus proches sont :", site1, "et", site2, "\n")
+  cat("La distance entre ces deux sites est de :", distance_min, "mètres\n")
+} else {
+  cat("Aucun résultat n'a été trouvé, vérifiez vos données.\n")
+}
+```
+
+Les deux sites les plus proches sont le Vélodrome National et le Stade BMX, situés à Saint-Quentin-en-Yvelines, à une distance de 91,69 mètres l'un de l'autre.
+
+### Question 10
+
+#### Quels sont les deux sites les plus éloignés ?
+
+```{r}
+site1bis <- NULL
+site2bis <- NULL
+distance_max <- 0
+```
+
+```{r results='hide'}
+for (x in 1:(nrow(coordonnees) - 1)) {
+  for (y in (x + 1):nrow(coordonnees)) {
+    nom_site_x <- tolower(trimws(noms_sites[x]))
+    nom_site_y <- tolower(trimws(noms_sites[y]))
+    
+    distance <- distHaversine(coordonnees[c(x, y), , drop = FALSE])
+    
+    cat("Distance entre", nom_site_x, "et", nom_site_y, ":", distance, "mètres\n")
+    
+    if (distance > distance_max) {
+      distance_max <- distance
+      site1bis <- nom_site_x
+      site2bis <- nom_site_y
+      
+      cat("Nouvelle paire trouvée :", site1bis, "et", site2bis, "avec distance :", distance_max, "mètres\n")
+    }
+  }
+}
+```
+
+```{r}
+if (!is.null(site1bis) && !is.null(site2bis)) {
+  cat("Les deux sites les plus éloignés sont :", site1bis, "et", site2bis, "\n")
+  cat("La distance entre ces deux sites est de :", distance_max, "mètres\n")
+} else {
+  cat("Aucun résultat n'a été trouvé, vérifiez vos données.\n")
+}
+```
+
+La distance la plus grande entre deux sites est de 74 882 mètres, soit plus de 74 kilomètres, séparant le Stade Nautique de la Colline d’Elancourt.
+
+### Question 11
+
+::: {style="text-align: justify;"}
+#### Vous êtes un heureux millionaire et souhaitez investir dans un bien immobilier. Vous décidez d’acheter un appartement situé au barycentre de l’ensemble des sites olympiques. Où se situe cet appartement ? {style="text-align: justify;"}
+:::
+
+##### Calcul et affichage des coordonnées du barycentre
+
+```{r}
+barycentre_coords <- c(mean(coordonnees$latitude), mean(coordonnees$longitude))
+cat("Coordonnées du barycentre :", barycentre_coords, "\n")
+
+```
+
+```{r}
+longitude_moy <- mean(coordonnees$longitude)
+longitude_moy
+latitude_moy <- mean(coordonnees$latitude)
+latitude_moy
+```
+
+##### Calcul des distances entre le barycentre et chacun des sites
+
+```{r}
+distances_barycentre <- distVincentySphere(cbind(longitude_moy, latitude_moy), cbind(coordonnees$longitude, coordonnees$latitude))
+distances_barycentre
+```
+
+##### Site le plus proche
+
+```{r}
+indice_site_plus_proche <- which.min(distances_barycentre)
+indice_site_plus_proche
+```
+
+Cet appartement semble se situer proche de l'indice 19, à savoir, proche du Stade Tour Eiffel.

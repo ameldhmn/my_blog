@@ -1,0 +1,440 @@
+---
+title: "Exercices - Semaine 3"
+date: "2024-03-07"
+categories: [code, analysis]
+image: "image.jpg"
+---
+
+## Exercices - Semaine 3
+
+### Préparation.  
+
+::: {style="text-align: justify;"}
+Démarrez un nouveau projet rstudio intitulé TP3. Nous allons avoir besoin de plusieurs librairies aujourd’hui. Installez les en utilisant la commande suivante:
+
+install.packages(c("stringr", "lubridate", "arrow", "dplyr", "tidyr", "jsonlite", "RSQLite"))
+
+À la racine du projet, créez un dossier data. Téléchargez les données associées au TP3 et décompressez les dans le dossier data. Supprimez le fichier .zip.
+:::
+
+```{r, message=FALSE}
+#install.packages(c("stringr", "lubridate", "arrow", "dplyr", "tidyr", "jsonlite", "RSQLite"))
+library(stringr)
+library(lubridate)
+library(dplyr)
+library(arrow)
+library(tidyr)
+library(jsonlite)
+library(RSQLite)
+```
+
+### Exercice
+
+### Import et lecture des données
+
+### Question 1
+
+#### Listez les fichiers présents dans le dossier data. Quelles sont les extensions des différents fichiers ?
+
+```{r}
+data <- list.files("data")
+print(data)
+
+extensions <- tools::file_ext(data)
+print(extensions)
+```
+
+Il y a 3 fichiers dans le dossier data dont un sous format sqlite, un autre json et le dernier parquet.
+
+### Question 2
+
+#### Lisez le fichier .parquet en utilisant la librairie arrow. Quelles sont les dimensions de la table ? Quelles sont les colonnes présentes ?
+
+```{r}
+tokyo <- read_parquet("~/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/tokyo_athletes.parquet")
+dim(tokyo)
+summary(tokyo)
+```
+
+La table Tokyo compte 11 085 entrées et est structurée en 3 colonnes.
+
+Les 3 colonnes présentes sont : Name, NOC et Discipline.
+
+### Question 3
+
+#### Lisez le fichier .json en utilisant la librairie jsonlite. Quelles sont les dimensions de la table ? Quelles sont les colonnes présentes ?
+
+```{r}
+olympics <- read_json("~/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/olympics_athletes.json")
+dim(olympics)
+#str(olympics)
+names(olympics)
+```
+
+```{r}
+length(olympics)
+```
+
+Il y a un total de 269 731 éléments dans l'objet "olympics".
+
+Les colonnes présentes sont les suivantes :\
+
+-   ID
+
+-   Name
+
+-   Sex
+
+-   Age
+
+-   Height
+
+-   Weight
+
+-   Team
+
+-   NOC
+
+-   Games
+
+-   City
+
+-   Sport
+
+-   Event
+
+-   Medal
+
+### Question 4
+
+#### Importez la librairie RSQLite, et ouvrez une connexion à la base de données sqlite en utilisant la fonction dbConnect. Le driver à utiliser sera SQLite(). Quelles sont les tables présentes dans la table ? Vous pourrez utiliser la fonction dbListTables.
+
+```{r}
+connexion <- dbConnect(drv=RSQLite::SQLite(), dbname="~/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/data.sqlite")
+table <- dbListTables(connexion)
+table
+```
+
+### Question 5
+
+#### Créez deux nouvelles tables dans la base de données à l’aide de la fonction dbWriteTable. Les tables s’appeleront respectivement olympics_athletes et tokyo_athletes pour les fichiers olympics_athletes.json et tokyo_athletes.parquet.
+
+```{r}
+if (dbIsValid(connexion)) {
+  
+  file_olympics <- "/Users/ameldahmani/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/olympics_athletes.json"
+  file_tokyo <- "/Users/ameldahmani/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/tokyo_athletes.parquet"
+  
+  tryCatch({
+    # Chargement des données json avec read_json
+    data_olympics <- read_json(file_olympics, simplifyVector = TRUE)
+    
+    #Convertion des données as.data.frame 
+   
+   data_olympics_df <- as.data.frame(data_olympics)
+    
+    #dbWriteTable avec append=TRUE pour ajouter à la table déjà existante
+  dbWriteTable(connexion, "olympics_athletes", data_olympics_df, append = TRUE)
+    
+    #dbWriteTable avec overwrite=TRUE pour écraser la table existante
+  dbWriteTable(connexion, "tokyo_athletes", read_parquet(file_tokyo), overwrite = TRUE)
+  }, error = function(e) {
+    cat("Erreur lors de la lecture du fichier JSON :", conditionMessage(e), "\n")
+  })
+  
+} else {
+  cat("Erreur, la connexion à la base de données a échoué.")
+}
+```
+
+### Question 6
+
+#### Inspectez la table olympics_athletes en utilisant la fonction dbListFields. Quelles sont les colonnes de la table ?
+
+```{r}
+if (dbIsValid(connexion)) {
+  colonnes_olympics <- dbListFields(connexion, "olympics_athletes")
+  print(colonnes_olympics)
+} else {
+  cat("Erreur, la connexion à la base de données a échoué.")
+}
+```
+
+Les colonnes de la table sont les suivantes :\
+- ID\
+- Name\
+- Sex\
+- Age\
+- Height\
+- Weight\
+- Team\
+- NOC\
+- Games\
+- City\
+- Sport\
+- Event\
+- Medal
+
+### Question 7
+
+#### Importez cette table depuis la base de données en utilisant la fonction dbReadTable.
+
+#### Convertissez la table en tibble en utilisant la fonction as_tibble.
+
+```{r}
+if (dbIsValid(connexion)) {
+  
+  nomdelatable <- "olympics_athletes"
+  
+  table_importee <- dbReadTable(connexion, nomdelatable)
+  
+  tibbleresultat <- as_tibble(table_importee)
+  
+  print(tibbleresultat)
+  
+} else {
+  cat("Erreur, la connexion à la base de données a échoué.")
+}
+```
+
+### Dans les questions suivantes, utilisez en priorité les fonctions des packages dplyr, tidyr.
+
+### dplyr, tidyr
+
+#### Dans les questions suivantes, utilisez en priorité les fonctions des packages dplyr, tidyr.
+
+### Question 8
+
+#### Convertissez la colonne Sex en variable catégorielle avec la fonction mutate
+
+```{r}
+tibbleresultat <- tibbleresultat|> 
+  mutate(Sex = as.factor(Sex))
+print(tibbleresultat)
+str(tibbleresultat)
+```
+
+La colonne Sex a bien été convertie en variable catégorielle.
+
+### Question 9
+
+#### Créez deux colonnes à partir de la colonne Games. La première colonne Year sera une colonne de type integer contenant l’année des jeux. La deuxième colonne isSummer sera une colonne booléenne qui indiquera si les jeux sont des jeux d’été ou d’hiver. Vous pourrez utiliser la fonction separate_wider_delim de tidyr notamment
+
+```{r}
+tibbleresultat <- tibbleresultat |> 
+  separate(Games, into = c("Year", "isSummer"), sep = " ", convert = TRUE)
+print(tibbleresultat)
+tibbleresultat
+```
+
+Les colonnes Year et isSummer ont bien été crées.
+
+#### Les questions suivantes nécessitent l’application de plusieurs instructions en séquence. Essayez tant que possible de chaîner les instructions avec des pipes (%\>% ou \|\>).
+
+### Question 10
+
+#### Calculez la moyenne d’age des athletes pour chacune des éditions des JO d’été. Quelle édition a compté les athlètes les plus jeunes ? Les plus vieux ?
+
+```{r}
+Moyenne_age <- tibbleresultat |> 
+  group_by(Year) |> 
+  summarise(moyenne_age = mean(Age, na.rm = TRUE))
+print(Moyenne_age)
+```
+
+##### Athlètes les plus jeunes
+
+```{r}
+plusjeunes <- Moyenne_age |> 
+  filter(moyenne_age == min(moyenne_age, na.rm = TRUE))
+print(plusjeunes)
+```
+
+L'édition de 1896 a présenté les athlètes les plus jeunes, avec une moyenne d'âge de 23,6 ans.
+
+##### Athlètes les plus vieux
+
+```{r}
+plusvieux <- Moyenne_age |>  
+  filter(moyenne_age == max(moyenne_age, na.rm = TRUE))
+print(plusvieux)
+```
+
+L'édition de 1932 a accueilli les athlètes les plus âgés, avec une moyenne d'âge de 29,6 ans.
+
+### Question 11
+
+#### Quelle est la discipline des JO d’été dont la taille des athlètes féminines est la plus grande? Quelle a été cette discipline au cours de chacune des éditions ? Calculez le nombre de fois où chaque discipline a été la discipline avec les plus grandes athlètes
+
+##### méthode 1
+
+```{r}
+athletes_femmes <- tibbleresultat |> 
+  filter(Sex == "F")
+
+athletes_femmes <- athletes_femmes |> 
+  mutate(Height = ifelse(is.na(Height), 0, Height))
+
+plus_grande_taille_par_discipline <- athletes_femmes |> 
+  group_by(Sport, Year, .groups = "drop_last") |> 
+  summarise(taille_max = max(Height, na.rm = TRUE), .groups = "drop_last")
+
+plus_grande_taille_discipline_par_annee <- plus_grande_taille_par_discipline |> 
+  group_by(Year, .groups = "drop_last") |> 
+  filter(taille_max == max(taille_max, na.rm = TRUE), .groups == "drop_last")
+
+discipline_plus_grande_frequence <- plus_grande_taille_discipline_par_annee |> 
+  group_by(Sport, .groups = "drop_last") |> 
+  summarise(frequence = n(), .groups = "drop_last")
+print("Discipline des JO d'été avec la plus grande taille d'athlètes féminines par année :")
+```
+
+##### méthode 2
+
+```{r}
+library(dplyr)
+
+discipline_plus_grande_frequence2 <- plus_grande_taille_discipline_par_annee |> 
+  group_by(Sport) |> 
+  summarise(frequence = n()) |> 
+  arrange(desc(frequence)) |> 
+  distinct()
+```
+
+La deuxième méthode permet de classer les disciplines par fréquence, assurant ainsi que la discipline la plus fréquente apparaîtra en premier.
+
+```{r}
+print(plus_grande_taille_discipline_par_annee, n = 60)
+```
+
+La plus grande taille par discipline est observée dans le basketball, atteignant 213 cm.
+
+```{r}
+print(discipline_plus_grande_frequence)
+print(discipline_plus_grande_frequence2)
+```
+
+Sur l'ensemble des éditions, le basketball a été la discipline avec les plus grandes athlètes féminines à 11 reprises.
+
+### Vous disposez du texte suivant :
+
+###### Les jeux olympiques d’été se déroulent normalement tous les 4 ans, durant les mois de Juillet et Août. Les jeux de Rio ont eu lieu du 5 Août 2016 au 20 Août 2016, ceux de Tokyo du 23 Juillet 2021 au 8 Août 2021, et ceux de Paris auront lieu du 26 Juillet 2024 au 11 Août 2024. Plus de 10000 athlètes sont attendus du monde entier à Paris.
+
+```{r}
+texte <- "Les jeux olympiques d’été se déroulent normalement tous les 4 ans, durant les mois de Juillet et Août. Les jeux de Rio ont eu lieu du 5 Août 2016 au 20 Août 2016, ceux de Tokyo du 23 Juillet 2021 au 8 Août 2021, et ceux de Paris auront lieu du 26 Juillet 2024 au 11 Août 2024. Plus de 10000 athlètes sont attendus du monde entier à Paris."
+```
+
+### stringr, lubridate
+
+::: {style="text-align: justify;"}
+Vous disposez du texte suivant :
+
+Les jeux olympiques d’été se déroulent normalement tous les 4 ans, durant les mois de Juillet et Août. Les jeux de Rio ont eu lieu du 5 Août 2016 au 20 Août 2016, ceux de Tokyo du 23 Juillet 2021 au 8 Août 2021, et ceux de Paris auront lieu du 26 Juillet 2024 au 11 Août 2024. Plus de 10000 athlètes sont attendus du monde entier à Paris.
+:::
+
+### Question 12
+
+::: {style="text-align: justify;"}
+#### En utilisant les fonctions du packages stringr, extrayez les dates des différentes éditions des JO. Aide : définissez une expression régulière capable de capturer une séquence de caractères représentant une date telle que “26 Juillet 2024”. Vous pourrez utiliser cette regex avec la fonction str_extract_all par exemple.
+:::
+
+```{r}
+format_date <- "\\b\\d{1,2} (Janvier|Février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre) \\d{4}\\b"
+
+datesJO <- str_extract_all(texte, format_date)[[1]]
+print(datesJO)
+```
+
+Les dates mentionnées ci-dessus correspondent aux différentes éditions des Jeux Olympiques.
+
+### Question 13
+
+#### Remplacez les noms des mois par leur numéro pour rendre ces éléments convertibles en date en utilisant la fonction str_replace
+
+```{r}
+mois_num <- function(mois) {
+  mois <- tolower(mois)
+  mois_num <- c("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre")
+  return(match(mois, mois_num))
+}
+
+dates_num <- str_replace_all(datesJO, format_date, function(match) {
+  elements <- str_split(match, " ")[[1]]
+  elements[2] <- mois_num(elements[2])
+  return(paste(elements, collapse = " "))
+})
+
+print(dates_num)
+```
+
+Le remplacement des noms des mois par leur numéro a bien fonctionné.
+
+### Question 14
+
+#### Convertissez ces 3 éléments en date en utilisant la fonction appropriée du package lubridate
+
+```{r}
+convertion <- function(date_texte) {
+  elements <- str_split(date_texte, " ")[[1]]
+  jour <- as.integer(elements[1])
+  mois <- as.integer(elements[2])
+  annee <- as.integer(elements[3])
+  return(dmy(paste(jour, mois, annee, sep = "-")))
+}
+
+dates_converties <- sapply(dates_num, convertion)
+dates_converties
+```
+
+La conversion a également bien fonctionné.
+
+### Question 15
+
+#### Combien de jours ont séparés les éditions de Rio et Tokyo ?
+
+#### Et sépareront les éditions de Tokyo et de Paris ? Faites le même calcul en semaines.
+
+```{r}
+library(lubridate)
+ParisDate <- dmy("26 Juillet 2024", locale = "fr_FR")
+TokyoDate <- dmy("23 Juillet 2021", locale = "fr_FR")
+RioDate <- dmy("5 Août 2016", locale = "fr_FR")
+```
+
+##### Jours qui séparent Rio et Tokyo
+
+```{r}
+Rio_Tokyo_jours <- as.numeric(difftime(TokyoDate, RioDate, units = "days"))
+cat("Nombre de jours entre Rio et Tokyo :", Rio_Tokyo_jours, "jours\n")
+```
+
+1 813 jours séparent les éditions de Rio en 2016 et de Tokyo en 2021.
+
+##### Jours qui séparent Tokyo et Paris
+
+```{r}
+Tokyo_Paris_jours <- as.numeric(difftime(ParisDate, TokyoDate, units = "days"))
+cat("Nombre de jours entre Tokyo et Paris :", Tokyo_Paris_jours, "jours\n")
+```
+
+1 099 jours séparent les éditions de Tokyo en 2021 et de Paris en 2024.
+
+##### Semaines qui séparent Rio et Tokyo
+
+```{r}
+Rio_Tokyo_semaines <- as.numeric(difftime(TokyoDate, RioDate, units = "weeks"))
+
+cat("Nombre de semaines entre Rio et Tokyo :", Rio_Tokyo_semaines, "semaines\n")
+```
+
+259 semaines séparent les éditions de Rio en 2016 et de Tokyo en 2021.
+
+##### Jours qui séparent Tokyo et Paris
+
+```{r}
+Tokyo_Paris_semaines <- as.numeric(difftime(ParisDate, TokyoDate, units = "weeks"))
+
+cat("Nombre de semaines entre Tokyo et Paris :", Tokyo_Paris_semaines, "semaines\n")
+```
+
+157 semaines séparent les éditions de Tokyo en 2021 et de Paris en 2024.
