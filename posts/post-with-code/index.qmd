@@ -1,13 +1,67 @@
 ---
 title: "Post With Code"
-author: "Harlow Malloc"
+author: "Amel Dahmani"
 date: "2024-03-07"
 categories: [news, code, analysis]
 image: "image.jpg"
 ---
 
-This is a post with executable code.
+## Librairie olympicsWeather
+
+::: {style="<div style"}
+La library **olympicsWeather** fournit des fonctionnalités pour obtenir des prévisions météorologiques pour les sites olympiques. Voici comment installer le package en utilisant le package remotes depuis GitHub :
+:::
+
+```{r, eval =FALSE}
+# Utiliser remotes pour installer le package olympicsWeather depuis GitHub
+remotes::install_github("utilisateur/olympicsWeather")
+```
+
+::: {style="<div style"}
+Cette section introduit le package olympicsWeather et explique comment l'installer depuis GitHub en utilisant le package remotes.
+:::
+
+## Prévisions météo pour le Stade de France
+
+Pour obtenir les prévisions météorologiques à 7 jours pour le Stade de France, nous pouvons utiliser la fonction `get_forecast()` en spécifiant "Stade de France" comme adresse :
+
+```{r, echo =FALSE, message=FALSE}
+library(olympicsWeather)
+library(devtools)
+library(httr2)
+library(jsonlite)
+library(usethis)
+library(htmltools)
+library(tibble)
+library(purrr)
+library(leaflet)
+library(sf)
+library(testthat)
+library(tidygeocoder)
+library(roxygen2)
+library(lubridate)
+library(quarto)
+```
+
 
 ```{r}
-1 + 1
+get_forecast("Stade de France")
 ```
+
+## Prévisions météo pour Tahiti
+
+Pour obtenir les prévisions météorologiques pour Tahiti, nous utilisons la fonction **`get_forecast()`** en spécifiant "Tahiti" comme adresse :
+
+```{r}
+get_forecast("Tahiti")
+```
+
+## **Prévisions météo pour les coordonnées GPS 43.276703, 5.334791**
+
+Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction **`get_forecast`**:
+
+```{r}
+get_forecast(c(43.276703, 5.334791))
+```
+
+Assurez-vous d'ajuster les fonctions et les arguments en fonction de la structure et de la logique de votre code. Ceux-ci servent simplement d'exemples pour illustrer comment vous pourriez inclure les différentes requêtes météorologiques dans votre post de blog.
