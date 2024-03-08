@@ -109,10 +109,9 @@ Les colonnes présentes sont les suivantes :\
 
 #### Importez la librairie RSQLite, et ouvrez une connexion à la base de données sqlite en utilisant la fonction dbConnect. Le driver à utiliser sera SQLite(). Quelles sont les tables présentes dans la table ? Vous pourrez utiliser la fonction dbListTables.
 
-```{r}
+```{r, }
 connexion <- dbConnect(drv=RSQLite::SQLite(), dbname="~/Library/Mobile Documents/com~apple~CloudDocs/M1 ECAP/R avancé/data/data.sqlite")
 table <- dbListTables(connexion)
-table
 ```
 
 ### Question 5
