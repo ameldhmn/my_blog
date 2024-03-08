@@ -146,6 +146,8 @@ if (dbIsValid(connexion)) {
 }
 ```
 
+Les deux tables ont bien été crées.
+
 ### Question 6
 
 #### Inspectez la table olympics_athletes en utilisant la fonction dbListFields. Quelles sont les colonnes de la table ?
