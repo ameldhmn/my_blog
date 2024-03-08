@@ -2,7 +2,7 @@
 title: "Exercices - Semaine 4️⃣"
 date: "2024-03-07"
 categories: [code, analysis]
-image: "image.jpg"
+image: "images/Image 8.jpeg"
 ---
 
 ## Exercices - Semaine 4

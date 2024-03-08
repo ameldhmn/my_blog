@@ -3,7 +3,7 @@ title: "olympicsWeather ? ⛅️"
 author: "Amel Dahmani"
 date: "2024-03-07"
 categories: [code, analysis]
-image: "image.jpg"
+image: "images/Image 8.jpeg"
 ---
 
 ## Librairie olympicsWeather

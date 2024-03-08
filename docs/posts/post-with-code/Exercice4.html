@@ -251,11 +251,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 9
   latitude longitude generationtime_ms utc_offset_seconds timezone
      &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;              &lt;int&gt; &lt;chr&gt;   
-1     48.8      2.36             0.196                  0 GMT     
-2     48.8      2.36             0.196                  0 GMT     
-3     48.8      2.36             0.196                  0 GMT     
-4     48.8      2.36             0.196                  0 GMT     
-5     48.8      2.36             0.196                  0 GMT     
+1     48.8      2.36             0.121                  0 GMT     
+2     48.8      2.36             0.121                  0 GMT     
+3     48.8      2.36             0.121                  0 GMT     
+4     48.8      2.36             0.121                  0 GMT     
+5     48.8      2.36             0.121                  0 GMT     
 # ℹ 4 more variables: timezone_abbreviation &lt;chr&gt;, elevation &lt;dbl&gt;,
 #   hourly_units &lt;named list&gt;, hourly &lt;named list&gt;</code></pre>
 </div>
@@ -311,11 +311,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 5 × 9
   latitude longitude generationtime_ms utc_offset_seconds timezone
      &lt;dbl&gt;     &lt;dbl&gt;             &lt;dbl&gt;              &lt;int&gt; &lt;chr&gt;   
-1     47.2     -1.55             0.185                  0 GMT     
-2     47.2     -1.55             0.185                  0 GMT     
-3     47.2     -1.55             0.185                  0 GMT     
-4     47.2     -1.55             0.185                  0 GMT     
-5     47.2     -1.55             0.185                  0 GMT     
+1     47.2     -1.55             0.261                  0 GMT     
+2     47.2     -1.55             0.261                  0 GMT     
+3     47.2     -1.55             0.261                  0 GMT     
+4     47.2     -1.55             0.261                  0 GMT     
+5     47.2     -1.55             0.261                  0 GMT     
 # ℹ 4 more variables: timezone_abbreviation &lt;chr&gt;, elevation &lt;dbl&gt;,
 #   hourly_units &lt;named list&gt;, hourly &lt;named list&gt;</code></pre>
 </div>
@@ -415,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">nrow</span>(resp), <span class="dv">3</span>)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 🌈</code></pre>
+<pre><code>Test passed 🎉</code></pre>
 </div>
 </div>
 </section>
@@ -451,7 +451,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">ncol</span>(resp), <span class="dv">5</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🥳</code></pre>
 </div>
 </div>
 <p>La fonction “unnest_response” réussit tous les tests.</p>
@@ -491,7 +491,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Passing 1 address to the ArcGIS single address geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.6 seconds</code></pre>
+<pre><code>Query completed in: 0.5 seconds</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>resultat10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -506,8 +506,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">lng =</span> resultat10<span class="sc">$</span>long, <span class="at">lat =</span> resultat10<span class="sc">$</span>lat, <span class="at">popup =</span> <span class="st">"IAE Nantes"</span>)</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>carte</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-c3f446c6501b0017e645" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-c3f446c6501b0017e645">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[47.243139604933,-1.554257933235,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IAE Nantes",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[47.243139604933,47.243139604933],"lng":[-1.554257933235,-1.554257933235]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-f1318d4a1722299f0eed" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-f1318d4a1722299f0eed">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[47.243139604933,-1.554257933235,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"IAE Nantes",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[47.243139604933,47.243139604933],"lng":[-1.554257933235,-1.554257933235]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <section id="fonction-générique-pour-obtenir-les-prévisions-météo" class="level5">
@@ -563,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Passing 1 address to the ArcGIS single address geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.7 seconds</code></pre>
+<pre><code>Query completed in: 0.1 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 47.243140 -1.554258</code></pre>
@@ -659,7 +659,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Passing 1 address to the ArcGIS single address geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.2 seconds</code></pre>
+<pre><code>Query completed in: 0.9 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 168 × 5
@@ -745,7 +745,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Passing 1 address to the ArcGIS single address geocoder</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Query completed in: 0.8 seconds</code></pre>
+<pre><code>Query completed in: 0.3 seconds</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resultat14)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -839,8 +839,8 @@ Attaching package: 'olympicsWeather'</code></pre>
 <span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>ma_carte <span class="ot">&lt;-</span> <span class="fu">visualiser_carte</span>(exemple1)</span>
 <span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>ma_carte</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-76754f7fe540a0b8e413" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-76754f7fe540a0b8e413">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[51.5074,40.73061,-33.8688],[-0.1278,-73.935242,151.2093],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-33.8688,51.5074],"lng":[-73.935242,151.2093]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-89420483261b7e719bd0" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-89420483261b7e719bd0">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addMarkers","args":[[51.5074,40.73061,-33.8688],[-0.1278,-73.935242,151.2093],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[-33.8688,51.5074],"lng":[-73.935242,151.2093]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
