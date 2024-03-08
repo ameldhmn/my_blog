@@ -1,5 +1,5 @@
 ---
-title: "olympicsWeather ?"
+title: "olympicsWeather ? ⛅️"
 author: "Amel Dahmani"
 date: "2024-03-07"
 categories: [code, analysis]
@@ -57,7 +57,7 @@ get_forecast("Tahiti")
 
 ## **Prévisions météo pour les coordonnées GPS 43.276703, 5.334791**
 
-Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction **`get_forecast ou``get_forecast.numeric`**:
+Pour obtenir les prévisions météorologiques pour les coordonnées GPS 43.276703, 5.334791, nous pouvons utiliser la fonction **``` get_forecast ou``get_forecast.numeric ```**:
 
 ```{r}
 get_forecast(c(43.276703, 5.334791))

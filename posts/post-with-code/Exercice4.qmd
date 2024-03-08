@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 4"
+title: "Exercices - Semaine 4️⃣"
 date: "2024-03-07"
 categories: [code, analysis]
 image: "image.jpg"

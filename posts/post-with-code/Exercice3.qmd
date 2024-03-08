@@ -1,5 +1,5 @@
 ---
-title: "Exercices - Semaine 3"
+title: "Exercices - Semaine 3️⃣"
 date: "2024-03-07"
 categories: [code, analysis]
 image: "image.jpg"
@@ -7,7 +7,7 @@ image: "image.jpg"
 
 ## Exercices - Semaine 3
 
-### Préparation.  
+### Préparation.
 
 ::: {style="text-align: justify;"}
 Démarrez un nouveau projet rstudio intitulé TP3. Nous allons avoir besoin de plusieurs librairies aujourd’hui. Installez les en utilisant la commande suivante:

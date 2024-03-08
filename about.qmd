@@ -1,6 +1,6 @@
 ---
 title: "About"
-image: profile.jpg
+image: images/IMG_5658 2.jpeg
 about:
   template: jolla
   links:
@@ -12,4 +12,10 @@ about:
       href: https://github.com/ameldhmn
 ---
 
-About this blog
+::: {style="text-align:"}
+**Bonjour à tous et bienvenue sur mon blog ! 😊**
+
+Je suis Amel, étudiante en économétrie et les statistiques appliquées. Sur ce blog, vous aurez la possibilité d'explorer une diversité de sujets que j'ai abordés dans le domaine de l'économétrie.
+
+Ne manquez pas mes dernières publications en me suivant sur les réseaux sociaux ci-dessous !
+:::

@@ -7,14 +7,12 @@ categories: [news]
 
 Bienvenue sur mon blog !
 
-![](thumbnail.jpg){fig-align="left" width="300"}
-
 ::: {style="text-align: justify;"}
-Je suis ravie de vous accueillir sur mon espace en ligne où je partage du code, des exercices et des réflexions sur l'économétrie, ainsi que sur d'autres sujets liés à l'analyse de données et à la programmation.
+Je suis ravie de vous accueillir sur mon espace en ligne où je partage mes codes et exercices liés à l'analyse de données et à la programmation.
 
-En tant qu'étudiante passionnée d'économétrie, j'ai créé ce blog pour partager avec vous mes découvertes, mes expériences et mes apprentissages dans ce domaine fascinant. Vous trouverez ici une variété de contenus, allant de tutoriels de programmation à des exercices pratiques en économétrie, en passant par des analyses de données et des conseils pour améliorer vos compétences analytiques.
+En tant qu'étudiante en économétrie, j'ai créé ce blog pour partager avec vous mes expériences et mes apprentissages dans ce domaine. Vous trouverez ici mes exercices pratiques qui concernent la matière "R avancé" ainsi que des informations quant au package olympicsWeather que j'ai crée dans le cadre de ce cours.
 
-J'espère que vous trouverez mes articles utiles, inspirants et enrichissants dans votre parcours d'apprentissage. N'hésitez pas à explorer les différentes sections, à poser des questions et à partager vos propres idées et expériences.
+J'espère que vous trouverez mes articles utiles et n'hésitez pas à explorer les différentes sections !
 
-Merci d'être ici et de faire partie de cette communauté dédiée à l'économétrie et à l'analyse de données !
+Merci ! 😊
 :::
